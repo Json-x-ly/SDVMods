@@ -72,9 +72,10 @@ namespace Dem1se.CustomReminders.UI
                     Game1.tileSize * 5 + Game1.tileSize / 4 - Game1.tileSize / 8,
                     Game1.tileSize + Game1.tileSize / 8),
                 Utilities.Globals.Helper.Content.Load<Texture2D>("assets/DisplayReminders.png", ContentSource.ModFolder), new Rectangle(), 1.5f);
-                //Game1.options.uiScale > 1.25f ? (-2 * Game1.options.uiScale) + 4f : 1.5f);
-            Labels.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + IClickableMenu.spaceToClearSideBorder + IClickableMenu.borderWidth + Game1.tileSize * 1 + 4, yPositionOnScreen + IClickableMenu.borderWidth + IClickableMenu.spaceToClearTopBorder - Game1.tileSize / 8 + 8, 1, 1), Utilities.Globals.Helper.Translation.Get("new-reminder.reminder-message")));
+            // Display reminders test
+            Labels.Add(new ClickableComponent(new Rectangle(xPositionOnScreen - Game1.tileSize * 5 - IClickableMenu.spaceToClearSideBorder * 2 + 20, 10 + YPos + IClickableMenu.spaceToClearTopBorder, (Game1.tileSize * 5) + (Game1.tileSize / 4) - (Game1.tileSize / 8), Game1.tileSize + Game1.tileSize / 8), Utilities.Globals.Helper.Translation.Get("display-reminder.title")));
 
+            Labels.Add(new ClickableComponent(new Rectangle(xPositionOnScreen + IClickableMenu.spaceToClearSideBorder + IClickableMenu.borderWidth + Game1.tileSize * 1 + 4, yPositionOnScreen + IClickableMenu.borderWidth + IClickableMenu.spaceToClearTopBorder - Game1.tileSize / 8 + 8, 1, 1), Utilities.Globals.Helper.Translation.Get("new-reminder.reminder-message")));
             ReminderTextBox = new TextBox(null, null, Game1.smallFont, Game1.textColor)
             {
                 X = xPositionOnScreen + IClickableMenu.spaceToClearSideBorder + IClickableMenu.borderWidth + Game1.tileSize * 1,
@@ -289,10 +290,13 @@ namespace Dem1se.CustomReminders.UI
             foreach (ClickableTextureComponent button in SeasonButtons)
                 button.draw(b);
 
+            // draw displayreminder button
+            DisplayRemindersButton.draw(b);
+
             // draw labels
             foreach (ClickableComponent label in Labels)
             {
-                if (label.name == Utilities.Globals.Helper.Translation.Get("new-reminder.reminder-message"))
+                if (label.name == Utilities.Globals.Helper.Translation.Get("new-reminder.reminder-message") || label.name == Utilities.Globals.Helper.Translation.Get("display-reminder.title"))
                     Utility.drawTextWithShadow(b, label.name, Game1.dialogueFont, new Vector2(label.bounds.X, label.bounds.Y), Color.Black);
                 else
                     Utility.drawTextWithShadow(b, label.name, Game1.smallFont, new Vector2(label.bounds.X, label.bounds.Y), Color.Black);
@@ -307,8 +311,6 @@ namespace Dem1se.CustomReminders.UI
                 OkButton.draw(b, Color.Black * 0.5f, 0.97f);
             }
 
-            // draw displayreminder button
-            DisplayRemindersButton.draw(b);
 
             // draw cursor
             drawMouse(b);
